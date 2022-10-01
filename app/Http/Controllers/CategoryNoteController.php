@@ -9,10 +9,20 @@ use Illuminate\View\View;
 
 class CategoryNoteController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('notes.categories.index', [
-            'categories' => CategoryNote::all(),
+            'categories' => CategoryNote::query()
+                ->withCount('notes')
+                ->get(),
+        ]);
+    }
+
+    public function notes(CategoryNote $category): View
+    {
+        return view('notes.categories.notes', [
+            'category' => $category,
+            'notes' => $category->notes,
         ]);
     }
 

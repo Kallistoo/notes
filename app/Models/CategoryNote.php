@@ -16,6 +16,6 @@ class CategoryNote extends Model
 
     public function notes(): HasMany
     {
-        return $this->hasMany(Note::class);
+        return $this->hasMany(Note::class, 'category_id');
     }
 }

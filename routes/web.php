@@ -27,6 +27,7 @@ Route::name('notes.')->prefix('notes')->group(function () {
 
     Route::name('categories.')->prefix('categories')->group(function () {
         Route::get('/', [CategoryNoteController::class, 'index'])->name('index');
+        Route::get('/{category}', [CategoryNoteController::class, 'notes'])->name('notes');
         Route::get('/create', [CategoryNoteController::class, 'create'])->name('create');
         Route::post('/create', [CategoryNoteController::class, 'store'])->name('store');
         Route::get('/edit/{category}', [CategoryNoteController::class, 'edit'])->name('edit');
