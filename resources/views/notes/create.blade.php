@@ -13,7 +13,7 @@
         </div>
         <div class="mb-3">
             <label for="category_id" class="form-label label-required">Categorie</label>
-            <select class="form-select @error('category_id') is-invalid @enderror" name="category_id">
+            <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
                 <option selected disabled>-- Selecteer een categorie --</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}"{{ old('category_id', $selectedCategory?->id) === $category->id ? ' selected' : '' }}>{{ $category->title }}</option>

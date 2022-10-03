@@ -13,8 +13,8 @@
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $note->title) }}" placeholder="Titel van de notitie">
         </div>
         <div class="mb-3">
-            <label for="category_id @error('category_id') is-invalid @enderror" class="form-label label-required">Categorie</label>
-            <select class="form-select" name="category_id">
+            <label for="category_id" class="form-label label-required">Categorie</label>
+            <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
                 <option selected disabled>-- Selecteer een categorie --</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}"{{ old('category_id', $note->category_id) === $category->id ? ' selected' : '' }}>{{ $category->title }}</option>
