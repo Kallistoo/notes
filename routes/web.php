@@ -19,6 +19,7 @@ Route::get('/', [NoteController::class, 'index'])->name('notes.index');
 
 Route::name('notes.')->prefix('notes')->group(function () {
     Route::get('/', [NoteController::class, 'index'])->name('index');
+    Route::get('/board', [NoteController::class, 'board'])->name('board');
     Route::get('/search', [NoteController::class, 'search'])->name('search');
     Route::get('/show/{note}', [NoteController::class, 'show'])->name('show');
     Route::get('/create', [NoteController::class, 'create'])->name('create');

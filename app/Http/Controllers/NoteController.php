@@ -17,6 +17,13 @@ class NoteController extends Controller
         ]);
     }
 
+    public function board(): View
+    {
+        return view('notes.board', [
+            'notes' => Note::all()->sortBy('title'),
+        ]);
+    }
+
     public function show(Request $request, Note $note): View
     {
         return view('notes.show', [
