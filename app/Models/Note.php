@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property CategoryNote category
  *
  * @method static create(array $array)
+ * @method static Builder search($searchTerm)
  */
 class Note extends Model
 {
@@ -25,6 +27,15 @@ class Note extends Model
         'title',
         'content',
     ];
+
+    public function scopeSearch(Builder $builder, $searchTerm): Builder
+    {
+        return $builder
+            ->where(fn (Builder $query) => $query
+                ->where('title', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('content', 'LIKE', '%' . $searchTerm . '%')
+            );
+    }
 
     public function category(): BelongsTo
     {

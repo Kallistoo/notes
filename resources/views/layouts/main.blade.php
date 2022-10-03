@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-        <title>{{ env('APP_NAME') }}@hasSection('title') - @yield('title')@endif</title>
+        <title>{{ env('APP_NAME') }}@hasSection('title') &rsaquo; @yield('title')@endif</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -12,13 +12,23 @@
     <body>
         <div id="app" class="container mt-2 shadow rounded-3">
             <div class="row my-2">
-                <div class="col-12">
+                <div class="col-8">
                     <a href="{{ route('notes.index') }}" class="btn btn-primary mb-2">
                         <i class="fa fa-list"></i> Notities
                     </a>
                     <a href="{{ route('notes.categories.index') }}" class="btn btn-primary mb-2">
                         <i class="fa fa-list"></i> Categorieën
                     </a>
+                </div>
+                <div class="col-4">
+                    <form action="{{ route('notes.search') }}" method="GET">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Zoeken..." name="query" value="{{ $query ?? '' }}">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 

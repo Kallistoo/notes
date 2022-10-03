@@ -74,4 +74,16 @@ class NoteController extends Controller
 
         return redirect()->route('notes.index');
     }
+
+    public function search(Request $request): View
+    {
+        $request->validate(['query' => 'required']);
+
+        $query = $request->get('query');
+
+        return view('notes.index', [
+            'notes' => Note::search($query)->get(),
+            'query' => $query,
+        ]);
+    }
 }

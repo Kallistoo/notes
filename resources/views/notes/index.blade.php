@@ -3,7 +3,11 @@
 @section('title', 'Overzicht notities')
 
 @section('content')
-    <h4 class="mb-3">Overzicht notities</h4>
+    @if (isset($query))
+        <h4 class="mb-3">Gevonden notities voor "{{ $query }}"</h4>
+    @else
+        <h4 class="mb-3">Overzicht notities</h4>
+    @endif
 
     <table class="table table-striped">
         <thead>
