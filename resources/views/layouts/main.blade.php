@@ -11,6 +11,7 @@
     </head>
     <body>
         @includeWhen($errors, 'partials.errors')
+        @includeWhen(session('flash_notification', collect())->isNotEmpty(), 'partials.flash')
 
         <div id="app" class="container mt-2 shadow rounded-3">
             <div class="row my-2">

@@ -13,7 +13,7 @@ class NoteController extends Controller
     public function index(Request $request, ?CategoryNote $category = null): View
     {
         return view('notes.index', [
-            'notes' => $category ? $category->notes : Note::all(),
+            'notes' => ($category ? $category->notes : Note::all())->sortBy('title'),
         ]);
     }
 
@@ -45,7 +45,7 @@ class NoteController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        session()->flash('success', 'Notitie "' . $request->get('title') . '" is toegevoegd.');
+        flash('Notitie "' . $request->input('title') . '" is toegevoegd.')->success();
 
         return redirect()->route('notes.index');
     }
@@ -65,20 +65,20 @@ class NoteController extends Controller
             'category_id' => 'required|exists:category_notes,id',
         ]);
 
-        session()->flash('success', 'Notitie "' . $request->get('title') . '" is aangepast.');
-
         $note->update([
             'title' => $request->input('title'),
             'category_id' => $request->input('category_id'),
             'content' => $request->input('content'),
         ]);
 
-        return redirect()->route('notes.edit', $note);
+        flash('Notitie "' . $request->input('title') . '" is aangepast.')->success();
+
+        return redirect()->route('notes.index');
     }
 
     public function delete(Request $request, Note $note): RedirectResponse
     {
-        session()->flash('success', 'Notitie "' . $request->get('title') . '" is verwijderd.');
+        flash('Notitie "' . $note->title . '" is verwijderd.')->success();
 
         $note->delete();
 

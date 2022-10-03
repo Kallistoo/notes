@@ -9,12 +9,13 @@ use Illuminate\View\View;
 
 class CategoryNoteController extends Controller
 {
-    public function index(Request $request): View
+    public function index(): View
     {
         return view('notes.categories.index', [
             'categories' => CategoryNote::query()
                 ->withCount('notes')
-                ->get(),
+                ->get()
+                ->sortBy('title'),
         ]);
     }
 
@@ -41,7 +42,7 @@ class CategoryNoteController extends Controller
             'title' => $request->input('title'),
         ]);
 
-        session()->flash('success', 'Categorie "' . $request->get('title') . '" is toegevoegd.');
+        flash('Categorie "' . $request->input('title') . '" is toegevoegd.')->success();
 
         return redirect()->route('notes.categories.index');
     }
@@ -59,20 +60,26 @@ class CategoryNoteController extends Controller
             'title' => 'required|unique:notes,title,' . $category->id . '|max:255',
         ]);
 
-        session()->flash('success', 'Categorie "' . $request->get('title') . '" is aangepast.');
-
         $category->update([
             'title' => $request->input('title'),
         ]);
 
-        return redirect()->route('notes.categories.edit', $category);
+        flash('Categorie "' . $request->input('title') . '" is aangepast.')->success();
+
+        return redirect()->route('notes.categories.index', $category);
     }
 
     public function delete(Request $request, CategoryNote $category): RedirectResponse
     {
-        session()->flash('success', 'Categorie "' . $request->get('title') . '" is verwijderd.');
+        if ($category->notes->isNotEmpty()) {
+            flash('Categorie "' . $category->title . '" bevat nog tenminste één notitie en kan daarom niet worden verwijderd.')->error();
 
-        $category->delete(); // TODO: Wat te doen met onderliggende notities?
+            return redirect()->back();
+        }
+
+        flash('Categorie "' . $category->title . '" is verwijderd.')->success();
+
+        $category->delete();
 
         return redirect()->route('notes.categories.index');
     }

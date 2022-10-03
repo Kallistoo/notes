@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property int id
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon created_at
  * @property Carbon updated_at
  *
- * @property Note notes
+ * @property Note|Note[]|Collection notes
  *
  * @method static create(array $array)
  */
