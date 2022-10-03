@@ -34,6 +34,11 @@ class NoteController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'title' => 'required|unique:notes|max:255',
+            'category_id' => 'required|exists:category_notes,id',
+        ]);
+
         Note::create([
             'title' => $request->input('title'),
             'category_id' => $request->input('category_id'),
@@ -55,6 +60,11 @@ class NoteController extends Controller
 
     public function update(Request $request, Note $note): RedirectResponse
     {
+        $request->validate([
+            'title' => 'required|unique:notes,title,' . $note->id . '|max:255',
+            'category_id' => 'required|exists:category_notes,id',
+        ]);
+
         session()->flash('success', 'Notitie "' . $request->get('title') . '" is aangepast.');
 
         $note->update([

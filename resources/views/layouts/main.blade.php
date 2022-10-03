@@ -10,6 +10,8 @@
         @vite('resources/js/app.js')
     </head>
     <body>
+        @includeWhen($errors, 'partials.errors')
+
         <div id="app" class="container mt-2 shadow rounded-3">
             <div class="row my-2">
                 <div class="col-8">

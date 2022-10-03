@@ -10,7 +10,7 @@
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label label-required">Titel</label>
-            <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $category->title) }}" placeholder="Titel van de categorie">
+            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{ old('title', $category->title) }}" placeholder="Titel van de categorie">
         </div>
         <div class="mb-3">
             <button class="btn btn-primary" name="save" type="submit">

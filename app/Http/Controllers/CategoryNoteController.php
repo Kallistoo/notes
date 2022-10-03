@@ -33,6 +33,10 @@ class CategoryNoteController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'title' => 'required|unique:category_notes|max:255',
+        ]);
+
         CategoryNote::create([
             'title' => $request->input('title'),
         ]);
@@ -51,6 +55,10 @@ class CategoryNoteController extends Controller
 
     public function update(Request $request, CategoryNote $category): RedirectResponse
     {
+        $request->validate([
+            'title' => 'required|unique:notes,title,' . $category->id . '|max:255',
+        ]);
+
         session()->flash('success', 'Categorie "' . $request->get('title') . '" is aangepast.');
 
         $category->update([

@@ -10,10 +10,10 @@
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label label-required">Titel</label>
-            <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $note->title) }}" placeholder="Titel van de notitie">
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $note->title) }}" placeholder="Titel van de notitie">
         </div>
         <div class="mb-3">
-            <label for="category_id" class="form-label label-required">Categorie</label>
+            <label for="category_id @error('category_id') is-invalid @enderror" class="form-label label-required">Categorie</label>
             <select class="form-select" name="category_id">
                 <option selected disabled>-- Selecteer een categorie --</option>
                 @foreach ($categories as $category)
