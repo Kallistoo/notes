@@ -1,0 +1,30 @@
+body {
+    background: #f5f6f7;
+}
+
+#app {
+    background: #fff;
+    border: 1px solid #eee;
+}
+
+.label-required::after {
+    content: "*";
+    margin-left: 3px;
+    color: #dc3545;
+}
+
+.table th.id {
+    width: 75px;
+}
+
+.table th.timestamp {
+    width: 175px;
+}
+
+.table td.action {
+    width: 40px;
+}
+
+.btn > i.fa {
+    margin-right: 4px;
+}

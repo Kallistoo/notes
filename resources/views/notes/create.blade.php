@@ -3,7 +3,7 @@
 @section('title', 'Notitie toevoegen')
 
 @section('content')
-    <h4 class="mb-3">Notitie toevoegen</h4>
+    <h4 class="mb-3">Notitie toevoegen @if ($selectedCategory)aan de categorie "{{ $selectedCategory->title }}" @endif</h4>
 
     <form action="{{ route('notes.store') }}" method="POST">
         @csrf
@@ -15,8 +15,8 @@
             <label for="category_id" class="form-label label-required">Categorie</label>
             <select class="form-select" name="category_id">
                 <option selected disabled>-- Selecteer een categorie --</option>
-                @foreach (\App\Models\CategoryNote::all() as $category)
-                    <option value="{{ $category->id }}"{{ old('category_id') === $category->id ? ' selected' : '' }}>{{ $category->title }}</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}"{{ old('category_id', $selectedCategory?->id) === $category->id ? ' selected' : '' }}>{{ $category->title }}</option>
                 @endforeach
             </select>
         </div>
@@ -28,7 +28,7 @@
             <button class="btn btn-primary" name="save" type="submit">
                 <i class="fa fa-save"></i> Opslaan
             </button>
-            <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-link">
+            <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-light">
                 <i class="fa fa-angle-left"></i> Ga terug
             </a>
         </div>

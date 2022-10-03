@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryNote;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -9,16 +10,26 @@ use Illuminate\View\View;
 
 class NoteController extends Controller
 {
-    public function index(): View
+    public function index(Request $request, ?CategoryNote $category = null): View
     {
         return view('notes.index', [
-            'notes' => Note::all(),
+            'notes' => $category ? $category->notes : Note::all(),
         ]);
     }
 
-    public function create(): View
+    public function show(Request $request, Note $note): View
     {
-        return view('notes.create');
+        return view('notes.show', [
+            'note' => $note,
+        ]);
+    }
+
+    public function create(Request $request, ?CategoryNote $category = null): View
+    {
+        return view('notes.create', [
+            'categories' => CategoryNote::all(),
+            'selectedCategory' => $category,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -36,10 +47,9 @@ class NoteController extends Controller
 
     public function edit(Request $request, Note $note): View
     {
-        $note->load('category');
-
         return view('notes.edit', [
             'note' => $note,
+            'categories' => CategoryNote::all(),
         ]);
     }
 
@@ -56,9 +66,11 @@ class NoteController extends Controller
         return redirect()->route('notes.edit', $note);
     }
 
-    public function delete(Request $request): RedirectResponse
+    public function delete(Request $request, Note $note): RedirectResponse
     {
         session()->flash('success', 'Notitie "' . $request->get('title') . '" is verwijderd.');
+
+        $note->delete();
 
         return redirect()->route('notes.index');
     }

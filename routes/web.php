@@ -19,7 +19,9 @@ Route::get('/', [NoteController::class, 'index'])->name('notes.index');
 
 Route::name('notes.')->prefix('notes')->group(function () {
     Route::get('/', [NoteController::class, 'index'])->name('index');
+    Route::get('/show/{note}', [NoteController::class, 'show'])->name('show');
     Route::get('/create', [NoteController::class, 'create'])->name('create');
+    Route::get('/create/{category?}', [NoteController::class, 'create'])->name('create');
     Route::post('/create', [NoteController::class, 'store'])->name('store');
     Route::get('/edit/{note}', [NoteController::class, 'edit'])->name('edit');
     Route::patch('/edit/{note}', [NoteController::class, 'update'])->name('update');
@@ -27,7 +29,7 @@ Route::name('notes.')->prefix('notes')->group(function () {
 
     Route::name('categories.')->prefix('categories')->group(function () {
         Route::get('/', [CategoryNoteController::class, 'index'])->name('index');
-        Route::get('/{category}', [CategoryNoteController::class, 'notes'])->name('notes');
+        Route::get('/show/{category}', [CategoryNoteController::class, 'show'])->name('show');
         Route::get('/create', [CategoryNoteController::class, 'create'])->name('create');
         Route::post('/create', [CategoryNoteController::class, 'store'])->name('store');
         Route::get('/edit/{category}', [CategoryNoteController::class, 'edit'])->name('edit');

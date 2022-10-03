@@ -18,9 +18,9 @@ class CategoryNoteController extends Controller
         ]);
     }
 
-    public function notes(CategoryNote $category): View
+    public function show(CategoryNote $category): View
     {
-        return view('notes.categories.notes', [
+        return view('notes.categories.show', [
             'category' => $category,
             'notes' => $category->notes,
         ]);
@@ -60,9 +60,11 @@ class CategoryNoteController extends Controller
         return redirect()->route('notes.categories.edit', $category);
     }
 
-    public function delete(Request $request): RedirectResponse
+    public function delete(Request $request, CategoryNote $category): RedirectResponse
     {
         session()->flash('success', 'Categorie "' . $request->get('title') . '" is verwijderd.');
+
+        $category->delete(); // TODO: Wat te doen met onderliggende notities?
 
         return redirect()->route('notes.categories.index');
     }

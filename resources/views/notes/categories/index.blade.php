@@ -13,22 +13,41 @@
                 <th>Aantal notities</th>
                 <th class="timestamp">Toegevoegd op</th>
                 <th class="timestamp">Gewijzigd op</th>
+                <th colspan="2">Acties</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($categories as $category)
                 <tr>
                     <td>{{ $category->id }}</td>
-                    <td><a href="{{ route('notes.categories.edit', $category->id) }}">{{ $category->title }}</a></td>
-                    <td><a href="{{ route('notes.categories.notes', $category->id) }}">{{ $category->notes_count }}</a></td>
+                    <td><a href="{{ route('notes.categories.show', $category) }}">{{ $category->title }}</a></td>
+                    <td>{{ $category->notes_count }}</td>
                     <td>{{ $category->created_at->format('d-m-Y H:i') }}</td>
                     <td>{{ $category->updated_at->format('d-m-Y H:i') }}</td>
+                    <td class="action">
+                        <a href="{{ route('notes.categories.edit', $category) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </td>
+                    <td class="action">
+                        <form action="{{ route('notes.categories.delete', $category) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-link p-0 border-0 align-baseline">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5"><em>Er zijn geen categorieën gevonden.</em></td>
+                    <td colspan="7"><em>Er zijn geen categorieën gevonden.</em></td>
                 </tr>
             @endforelse
         </tbody>
     </table>
+
+    <a href="{{ route('notes.categories.create') }}" class="btn btn-primary mb-2">
+        <i class="fa fa-plus"></i> Categorie toevoegen
+    </a>
 @endsection

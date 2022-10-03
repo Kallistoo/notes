@@ -15,7 +15,7 @@
             <button class="btn btn-primary" name="save" type="submit">
                 <i class="fa fa-save"></i> Opslaan
             </button>
-            <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-link">
+            <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-light">
                 <i class="fa fa-angle-left"></i> Ga terug
             </a>
         </div>
